@@ -33,7 +33,7 @@ import io
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-# app.config["CACHE_TYPE"] = "null"
+app.config["CACHE_TYPE"] = "null"
 #------------------------------ Saving dataset---------------------------------
 # this is the path to save dataset for preprocessing
 pathfordataset = "static/data-preprocess/"
@@ -132,14 +132,14 @@ def digit1():
 
         return render_template('/ann/digit/digitoutput.html', model_name=my_model_name,my_dataset=input_image, pred=preds, visualize=input )
 
-# # No caching at all for API endpoints.
-# @app.after_request
-# def add_header(response):
-#     # response.cache_control.no_store = True
-#     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
-#     response.headers['Pragma'] = 'no-cache'
-#     response.headers['Expires'] = '-1'
-#     return response
+# No caching at all for API endpoints.
+@app.after_request
+def add_header(response):
+    # response.cache_control.no_store = True
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
+    return response
 
 #-------------------Flask Application--------------------------------------------
 if __name__ == '__main__':
